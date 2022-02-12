@@ -6,7 +6,7 @@ Puts the contents of a specified matrix into a new Stata frame alongside its row
 To install this package run the following command:
 
 ```
-net install collect_to_frame, from("https://raw.githubusercontent.com/daniel-alves-fernandes/matrix-to-frame/main/") 
+net install matrix_to_frame, from("https://raw.githubusercontent.com/daniel-alves-fernandes/matrix-to-frame/main/") 
 ```
 
 ## Example
