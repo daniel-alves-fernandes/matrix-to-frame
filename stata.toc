@@ -1,0 +1,8 @@
+v 4.1.2
+d matrix_to_frame: puts the contents of a specified matrix into a new Stata frame.
+d
+d
+d Daniel Fernandes,
+d European University Institute, Florence
+d
+d daniel.fernandes@eui.eu
