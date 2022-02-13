@@ -15,12 +15,12 @@ net install matrix_to_frame, from("https://raw.githubusercontent.com/daniel-alve
 sysuse auto
 
 reg price mpg rep78
-matrix_to_frame r(table), into(results)
+matrix_to_frame r(table), frame(results)
 ```
 
 Frame `results` contains the following data:
 
-   rows  |       mpg  |    rep78  |   cons
+   rows  |       mpg  |    rep78  |   c3
 ---------|------------|-----------|---------
 b        | -271.6425  | 666.9568  | 9657.755 
 se       |  57.77115  | 342.3559  |  1346.54 
@@ -36,7 +36,7 @@ eform    |         0  |        0  |        0
 Alternatively:
   
 ```
-matrix_to_frame r(table)', into(results2)
+matrix_to_frame r(table)', frame(results2)
 ```
 
 The frame `results2` contains the following data:
