@@ -1,7 +1,7 @@
 /******************************************************************************
 matrix_to_frame.ado
 
-version 1.0
+version 1.1
 
 author: Daniel Fernandes
 contact: daniel.fernandes@eui.eu
@@ -11,7 +11,7 @@ contact: daniel.fernandes@eui.eu
 capture: program drop matrix_to_frame
 program define matrix_to_frame
 
-  syntax anything(name=matrix id="matrix"), Frame(string)
+  syntax anything(name=matrix id="matrix"), Frame(string) [VARnames]
 
   version 16
 
@@ -21,29 +21,32 @@ program define matrix_to_frame
 
   confirm new frame `frame'
 
-  matrix to_frame = `matrix'
-  local rows "`: rowfullnames to_frame'"
-  local cols "`: colfullnames to_frame'"
-  local row_n "`: rowsof to_frame'"
-  local col_n "`: colsof to_frame'"
+  tempname temp
+  matrix `temp' = `matrix'
+  local rows "`: rowfullnames `temp''"
+  local cols "`: colfullnames `temp''"
+  local row_n "`: rowsof `temp''"
+  local col_n "`: colsof `temp''"
 
   frame create `frame'
   frame `frame'{
-    svmat to_frame
+    quietly: svmat `temp', names(c)
 
     * Row names
-    gen rows = "", before(to_frame1)
+    quietly: gen rows = "", before(c1)
     forvalues i = 1/`row_n'{
       local val "`: word `i' of `rows''"
-      replace rows = "`val'" in `i'
+      quietly: replace rows = "`val'" in `i'
     }
 
     * Colnames
     forvalues i = 1/`col_n'{
       local val "`: word `i' of `cols''"
-      local val: display strtoname("`val'")
-      capture: rename to_frame`i' `val'
-      if (_rc == 198) rename to_frame`i' _`val'
+      label variable c`i' "`val'"
+      if ("`varnames'" == "varnames"){
+        local val: display strtoname("`val'")
+        capture: rename c`i' `val'
+      }
     }
   }
 end
